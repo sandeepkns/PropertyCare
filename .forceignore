@@ -1,0 +1,19 @@
+# List files or directories below to ignore them when running force:source:push, force:source:pull, and force:source:status
+# More information: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_exclude_source.htm
+#
+
+package.xml
+
+# Generated/managed — don't push
+**/jsconfig.json
+**/.eslintrc.json
+**/__tests__/**
+
+# Profiles drift constantly — we use permission sets (Phase 4) instead
+**/profiles/**
+
+# Don't deploy the portal (it's not Salesforce metadata)
+portal/**
+
+# Standard objects we don't customize — avoid retrieving noise
+**/objectTranslations/**

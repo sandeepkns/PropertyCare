@@ -155,7 +155,8 @@ sequenceDiagram
         ACT-->>AG: status
     else not found / not owned
         ACT-->>AG: "No request found for your account"
-        Note over ACT,AG: never reveal another tenant's data;<br/>never fabricate an ID
+        Note over ACT,AG: never reveal another tenant's data
+        Note over ACT,AG: never fabricate an ID
     end
     alt low model confidence
         AG->>AG: escalate to human queue
@@ -201,5 +202,3 @@ These are the decisions the diagrams encode; note them now so Phase 19's ADR fil
 5. **CDC for billing propagation** (not synchronous trigger chaining) — decouples billing from work-order transaction, avoids long transactions.
 6. **Flow for SLA/notification orchestration** (not Apex) — declarative, admin-maintainable, justified placement.
 7. **Permission sets over profiles** — deterministic deploys, CI-friendly.
-
----

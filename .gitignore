@@ -36,3 +36,8 @@ coverage/
 .DS_Store
 Thumbs.db
 *.log
+
+
+# Node Portal isolation guardrails
+portal/.env
+portal/node_modules/

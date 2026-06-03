@@ -1,0 +1,31 @@
+name: Deploy to Prod
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'force-app/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js Runtime Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Salesforce CLI Global Tooling
+        run: npm install --global @salesforce/cli
+
+      - name: Authenticate Non-Interactively with Target Production Org
+        run: |
+          echo "${{ secrets.SF_AUTH_URL }}" > authfile.txt
+          sf org login sfdx-url --sfdx-url-file authfile.txt --alias prod
+          rm authfile.txt
+
+      - name: Execute Production Deployment with Full Test Suites
+        run: sf project deploy start --target-org prod --test-level RunLocalTests --wait 60

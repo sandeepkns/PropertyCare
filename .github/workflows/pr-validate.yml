@@ -1,0 +1,47 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'force-app/**'
+      - 'sfdx-project.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js Runtime Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Salesforce CLI Global Tooling
+        run: npm install --global @salesforce/cli
+
+      - name: Authenticate Non-Interactively with Salesforce Dev Hub
+        run: |
+          echo "${{ secrets.SF_AUTH_URL }}" > authfile.txt
+          sf org login sfdx-url --sfdx-url-file authfile.txt --alias DevHub --set-default-dev-hub
+          rm authfile.txt
+
+      - name: Provision Ephemeral Dev/Test Scratch Org
+        run: sf org create scratch --definition-file config/project-scratch-def.json --alias ci --set-default --duration-days 1 --wait 20
+
+      - name: Deploy Source Metadata to Validation Org
+        run: sf project deploy start --target-org ci
+
+      - name: Execute Apex Local Regression Tests (Strict Coverage Gate)
+        run: sf apex run test --target-org ci --test-level RunLocalTests --code-coverage --wait 30 --result-format human
+
+      - name: Execute Static Analysis Scan (Salesforce Code Analyzer / PMD)
+        run: |
+          sf plugins install @salesforce/sfdx-scanner
+          sf scanner run --target force-app --engine pmd --severity-threshold 3
+
+      - name: Terminate Ephemeral Validation Scratch Org Lifecycle
+        if: always()
+        run: sf org delete scratch --target-org ci --no-prompt

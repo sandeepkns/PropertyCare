@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Integration Monitor" icon-name="utility:monitor">
+        <div class="slds-grid slds-gutters slds-p-horizontal_medium">
+            <div class="slds-col slds-size_1-of-4 slds-text-align_center
+                        slds-box slds-box_x-small">
+                <p class="slds-text-title">DLQ Depth</p>
+                <p class={dlqClass}>{depth}</p>
+                <lightning-button label="Replay DLQ" variant="destructive-text"
+                    onclick={handleReplay}></lightning-button>
+            </div>
+            <div class="slds-col slds-size_3-of-4">
+                <div class="slds-grid slds-grid_align-spread slds-p-bottom_x-small">
+                    <lightning-combobox label="Outcome" value={outcomeFilter}
+                        options={filterOptions} onchange={handleFilter}
+                        variant="label-inline"></lightning-combobox>
+                    <lightning-button label="Refresh" icon-name="utility:refresh"
+                        onclick={handleRefresh}></lightning-button>
+                </div>
+                <lightning-datatable key-field="Id" data={rows} columns={columns}
+                    hide-checkbox-column="true"></lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>

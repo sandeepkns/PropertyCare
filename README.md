@@ -1,18 +1,41 @@
-# Salesforce DX Project: Next Steps
+# PropertyCare — Connected Agentforce Maintenance Ecosystem
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+PropertyCare is an enterprise-grade, fully decoupled, and asynchronous application architecture built to bridge internal Salesforce core CRM operations with an external, customer-facing Tenant Repair Portal. 
 
-## How Do You Plan to Deploy Your Changes?
+By avoiding synchronous transaction coupling, the system ensures high-throughput reliability, resilient self-healing network rails, and robust defense-in-depth security boundaries.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+---
 
-## Configure Your Salesforce DX Project
+## 🏗️ Architectural Topology Matrix
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+The ecosystem operates across three tightly integrated, decoupled network layers:
 
-## Read All About It
+### 1. High-Assurance Inbound Gateway (JWT Secured)
+* **Ingress Vector**: The external Node.js/Express subsystem authenticates headless API handshakes via an **OAuth 2.0 JWT Bearer Flow** assertion token.
+* **Custom Custom Endpoint Engine**: Routes payloads directly into a versioned REST Resource class (`/api/v1/service-requests/*`).
+* **Schema Protection**: Programmatically shields the database layer from data mutations by running input fields through `Security.stripInaccessible` schema scrubbing prior to committing DML.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+### 2. Event-Driven Outbound Pipeline (Symmetric Signature Verification)
+* **Decoupled Detection**: Data status changes are captured asynchronously via Salesforce **Change Data Capture (CDC)** message buses, removing sync overhead from standard user layouts.
+* **Bulkified Transport**: A dedicated trigger consumer intercepts the CDC events and hands processing off to a bulkified, queueable handler engine (`VendorSyncQueueable`).
+* **Secure Delivery**: Routes traffic out of the platform via **Named Credentials**. To guarantee data integrity in transit, an inline cryptographically computed symmetric **HMAC SHA256 signature** is attached to the request headers (`X-PropertyCare-Signature`) for the Node server to validate.
+
+### 3. Asynchronous Resilient Self-Healing Loop (Big Object Store)
+* **Durable Storage Shield**: If an outbound callout encounters transport-layer or remote server failure, it avoids hitting standard relational database storage limits or blocking production threads by shifting payload payloads directly into a **Custom Big Object Store (`Failed_Event__b`)**.
+* **Primary Key Safety**: Uses deterministic composite index parameters (`Event_Uuid__c` + `Failed_At__c`) to allow high-volume write speeds and duplicate tracking optimization.
+* **Background Recovery**: An hourly batch engine evaluates outstanding rows *in-memory* to bypass Big Object table scan limitations and attempts delivery up to a configured threshold (`5` attempts). If it hits the ceiling, it hands processing off to a custom dashboard interface for manual administrator triage.
+
+---
+
+## 🛠️ Integrated Core Engineering Stack
+
+```text
+PropertyCare/
+├── force-app/main/default/         <-- Salesforce Metadata Architecture
+│   ├── classes/                    <-- Selective Selectors, Queueables, & Rest Resouces
+│   ├── lwc/integrationMonitor/     <-- Reactive Dashboard Control Interface
+│   └── objects/                    <-- Secure Private Sharing Model Custom Schema
+└── portal/                         <-- External Subsystem Architecture
+    ├── src/auth/sfJwt.js           <-- Headless JWT Generation Engine
+    ├── src/routes/webhook.js       <-- HMAC Signature Security Validator
+    └── src/server.js               <-- Express Application Entry Framework

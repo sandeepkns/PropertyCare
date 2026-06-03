@@ -1,0 +1,47 @@
+name: PropertyCare CI Pipeline Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'force-app/**'
+      - 'portal/**'
+
+jobs:
+  validate-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js Runtime Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'portal/package-lock.json'
+
+      - name: Install Salesforce CLI (sf) Global Tooling
+        run: npm install -g @salesforce/cli
+
+      - name: Store Dev Hub Credentials Authentication Key File
+        run: |
+          echo "${{ secrets.SFDX_DEV_HUB_AUTH_URL }}" > ./auth_url.txt
+
+      - name: Authenticate with Production Dev Hub Org
+        run: sf org login auth sfdx-url --sfdx-url-file ./auth_url.txt --set-default-dev-hub --alias devhub
+
+      - name: Provision Ephemeral QA Validation Scratch Org
+        run: sf org create scratch --definition-file config/project-scratch-def.json --alias qa-org --duration-days 1 --wait 20 --target-dev-hub devhub
+
+      - name: Validate Source Metadata via Test Deploy Run
+        run: sf project deploy start --target-org qa-org --dry-run
+
+      - name: Run Apex Regression Test Suites
+        run: sf apex test run --target-org qa-org --wait 20 --result-format human --detailed-coverage
+
+      - name: Terminate Ephemeral QA Scratch Org Lifecycle
+        if: always()
+        run: sf org delete scratch --target-org qa-org --no-prompt

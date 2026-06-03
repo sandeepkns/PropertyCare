@@ -2,11 +2,19 @@
   "packageDirectories": [
     {
       "path": "force-app",
-      "default": true
+      "default": true,
+      "package": "PropertyCare",
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "versionDescription": ""
     }
   ],
   "name": "PropertyCare",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "58.0"
+  "sourceApiVersion": "66.0",
+  "packageAliases": {
+    "PropertyCare": "0HogL0000002SGLSA2",
+    "PropertyCare@0.1.0-1": "04tgL000000GW8nQAG"
+  }
 }

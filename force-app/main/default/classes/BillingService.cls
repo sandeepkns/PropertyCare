@@ -1,8 +1,20 @@
 public with sharing class BillingService {
-    public static void syncFromWorkOrders(Set<Id> woIds) {
-        Map<Id,Work_Order__c> wos = new Map<Id,Work_Order__c>(WorkOrderSelector.byIds(woIds));
+    
+    // The annotation below makes the method instantly searchable inside Flow Builder
+    @InvocableMethod(
+        label='Sync Billing From Work Orders' 
+        description='Triggers the billing engine synchronization matrix for completed or cancelled work orders.'
+        category='Billing'
+    )
+    public static void syncFromWorkOrders(List<Id> woIds) {
+        if (woIds == null || woIds.isEmpty()) return;
+
+        // Convert the list to a set to keep the rest of your inner business logic exactly the same
+        Set<Id> woIdSet = new Set<Id>(woIds);
+        
+        Map<Id,Work_Order__c> wos = new Map<Id,Work_Order__c>(WorkOrderSelector.byIds(woIdSet));
         Map<Id,Billing_Statement__c> existing = new Map<Id,Billing_Statement__c>();
-        for (Billing_Statement__c b : BillingSelector.byWorkOrderIds(woIds)) {
+        for (Billing_Statement__c b : BillingSelector.byWorkOrderIds(woIdSet)) {
             existing.put(b.Work_Order__c, b);
         }
         List<Billing_Statement__c> upserts = new List<Billing_Statement__c>();

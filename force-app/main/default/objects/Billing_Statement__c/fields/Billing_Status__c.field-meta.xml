@@ -3,6 +3,7 @@
     <fullName>Billing_Status__c</fullName>
     <defaultValue>&quot;Draft&quot;</defaultValue>
     <description>Propagated from WO status via CDC</description>
+    <externalId>false</externalId>
     <label>Billing Status</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

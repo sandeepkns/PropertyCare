@@ -3,6 +3,7 @@
     <fullName>Active__c</fullName>
     <defaultValue>true</defaultValue>
     <description>Soft-disable</description>
+    <externalId>false</externalId>
     <label>Active</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

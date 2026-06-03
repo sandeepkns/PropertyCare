@@ -3,6 +3,7 @@
     <fullName>Status__c</fullName>
     <defaultValue>&quot;Open&quot;</defaultValue>
     <description>CDC-tracked; drives billing</description>
+    <externalId>false</externalId>
     <label>Status</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

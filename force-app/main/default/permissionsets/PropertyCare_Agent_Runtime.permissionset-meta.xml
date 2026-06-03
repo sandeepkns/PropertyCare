@@ -2,32 +2,31 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <hasActivationRequired>false</hasActivationRequired>
     <label>PropertyCare Agent Runtime</label>
-    
     <objectPermissions>
-        <object>Service_Request__c</object>
-        <allowCreate>true</allowCreate>
-        <allowRead>true</allowRead>
-        <allowEdit>false</allowEdit>
-        <allowDelete>false</allowDelete>
-        <viewAllRecords>false</viewAllRecords>
-        <modifyAllRecords>false</modifyAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <object>Work_Order__c</object>
         <allowCreate>false</allowCreate>
-        <allowRead>true</allowRead>
-        <allowEdit>false</allowEdit>
         <allowDelete>false</allowDelete>
-        <viewAllRecords>false</viewAllRecords>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-    </objectPermissions>
-    <objectPermissions>
         <object>Billing_Statement__c</object>
-        <allowCreate>false</allowCreate>
-        <allowRead>true</allowRead>
-        <allowEdit>false</allowEdit>
-        <allowDelete>false</allowDelete>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Service_Request__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Work_Order__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
 </PermissionSet>

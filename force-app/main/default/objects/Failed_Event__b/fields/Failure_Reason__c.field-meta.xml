@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Failure_Reason__c</fullName>
     <description>Exception type/message</description>
+    <externalId>false</externalId>
     <label>Failure Reason</label>
     <length>1000</length>
     <type>LongTextArea</type>

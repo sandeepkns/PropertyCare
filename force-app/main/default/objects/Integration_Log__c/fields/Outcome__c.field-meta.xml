@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Outcome__c</fullName>
     <description>Roll-up dimension for dashboard</description>
+    <externalId>false</externalId>
     <label>Outcome</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

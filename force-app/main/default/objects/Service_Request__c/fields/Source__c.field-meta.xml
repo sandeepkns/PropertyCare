@@ -3,6 +3,7 @@
     <fullName>Source__c</fullName>
     <defaultValue>&quot;Agent&quot;</defaultValue>
     <description>Provenance</description>
+    <externalId>false</externalId>
     <label>Source</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

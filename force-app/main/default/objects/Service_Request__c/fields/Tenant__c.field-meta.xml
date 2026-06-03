@@ -3,6 +3,7 @@
     <fullName>Tenant__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>Owning tenant (isolation key)</description>
+    <externalId>false</externalId>
     <label>Tenant</label>
     <referenceTo>Tenant__c</referenceTo>
     <relationshipLabel>Service Requests</relationshipLabel>

@@ -3,6 +3,7 @@
     <fullName>Service_Request__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>Source request</description>
+    <externalId>false</externalId>
     <label>Service Request</label>
     <referenceTo>Service_Request__c</referenceTo>
     <relationshipLabel>Work Orders</relationshipLabel>

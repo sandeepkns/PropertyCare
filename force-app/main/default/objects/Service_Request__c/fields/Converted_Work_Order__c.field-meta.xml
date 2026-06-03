@@ -3,6 +3,7 @@
     <fullName>Converted_Work_Order__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Back-reference once converted</description>
+    <externalId>false</externalId>
     <label>Converted Work Order</label>
     <referenceTo>Work_Order__c</referenceTo>
     <relationshipLabel>Service Requests</relationshipLabel>

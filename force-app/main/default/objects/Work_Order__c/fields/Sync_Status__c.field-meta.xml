@@ -3,6 +3,7 @@
     <fullName>Sync_Status__c</fullName>
     <defaultValue>&quot;Pending&quot;</defaultValue>
     <description>Outbound integration state</description>
+    <externalId>false</externalId>
     <label>Sync Status</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

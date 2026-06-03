@@ -3,6 +3,7 @@
     <fullName>Tenant__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>Denormalized for scoping/reporting</description>
+    <externalId>false</externalId>
     <label>Tenant</label>
     <referenceTo>Tenant__c</referenceTo>
     <relationshipLabel>Work Orders</relationshipLabel>

@@ -3,6 +3,7 @@
     <fullName>Status__c</fullName>
     <defaultValue>&quot;New&quot;</defaultValue>
     <description>Request lifecycle</description>
+    <externalId>false</externalId>
     <label>Status</label>
     <required>true</required>
     <trackHistory>false</trackHistory>

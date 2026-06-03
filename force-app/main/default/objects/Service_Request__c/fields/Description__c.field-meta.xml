@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Description__c</fullName>
     <description>Tenant&apos;s free text</description>
+    <externalId>false</externalId>
     <label>Description</label>
     <length>32768</length>
     <trackHistory>false</trackHistory>

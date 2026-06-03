@@ -3,6 +3,7 @@
     <fullName>Work_Order__c</fullName>
     <deleteConstraint>Restrict</deleteConstraint>
     <description>Source work order</description>
+    <externalId>false</externalId>
     <label>Work Order</label>
     <referenceTo>Work_Order__c</referenceTo>
     <relationshipLabel>Billing Statements</relationshipLabel>

@@ -25,4 +25,11 @@ public with sharing class WorkOrderService {
             System.enqueueJob(new VendorSyncQueueable(workOrderIds));
         }
     }
+
+    public static void handleOutboundStatusSynchronization(Set<Id> updatedWorkOrderIds) {
+    if (updatedWorkOrderIds == null || updatedWorkOrderIds.isEmpty()) return;
+    
+    // Asynchronous safety block guardrail: Offload network calls cleanly via system Queueable dispatch paths
+    System.enqueueJob(new VendorSyncQueueable(updatedWorkOrderIds));
+}
 }

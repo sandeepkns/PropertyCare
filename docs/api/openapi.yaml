@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: PropertyCare API
+  description: Versioned integration interface managing internal property maintenance sync tasks.
+  version: 1.0.0
+paths:
+  /api/v1/service-requests:
+    post:
+      summary: Create an inbound service repair request ticket from an external portal source.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestCreate'
+      responses:
+        '201':
+          description: Created successfully. Returns database reference keys.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRequestSuccessResponse'
+        '400':
+          description: Validation error. Missing required parameter bindings or schema type anomalies.
+        '401':
+          description: Unauthenticated. Token invalid, signature match rejected, or expired.
+        '403':
+          description: Forbidden Tenant. Portal identifier tracking resolution failed.
+        '409':
+          description: Duplicate externalId tracking conflict encountered (Idempotency shield).
+        '500':
+          description: Internal processing server failure. Transaction automatically reversed.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ServiceRequestCreate:
+      type: object
+      required:
+        - externalId
+        - tenantPortalId
+        - category
+        - priority
+      properties:
+        externalId:
+          type: string
+          maxLength: 64
+          example: "PORTAL-9f3a"
+        tenantPortalId:
+          type: string
+          example: "tenant-abc"
+        category:
+          type: string
+          enum: [Plumbing, Electrical, HVAC, Appliance, General]
+          example: "Plumbing"
+        priority:
+          type: string
+          enum: [Low, Medium, High, Urgent]
+          example: "High"
+        description:
+          type: string
+          example: "Leaking kitchen tap"
+        requestedSlot:
+          type: string
+          format: date-time
+          example: "2026-06-10T09:00:00Z"
+    ServiceRequestSuccessResponse:
+      type: object
+      properties:
+        salesforceId:
+          type: string
+          example: "a018W00000abcdeQAD"
+        requestNumber:
+          type: string
+          example: "SR-00042"
+        status:
+          type: string
+          example: "New"
+        externalId:
+          type: string
+          example: "PORTAL-9f3a"

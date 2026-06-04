@@ -8,6 +8,12 @@ By avoiding synchronous transaction coupling, the system ensures high-throughput
 
 ## 🏗️ Architectural Topology Matrix
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d11b18ab-87d1-47f1-a366-05e6dc4de2de"
+       alt="PropertyCare Architecture Diagram"
+       width="100%">
+</p>
+
 The ecosystem operates across three tightly integrated, decoupled network layers:
 
 ### 1. High-Assurance Inbound Gateway (JWT Secured)
@@ -40,5 +46,3 @@ PropertyCare/
     ├── src/routes/webhook.js       <-- HMAC Signature Security Validator
     └── src/server.js               <-- Express Application Entry Framework
 
-
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/d11b18ab-87d1-47f1-a366-05e6dc4de2de" />

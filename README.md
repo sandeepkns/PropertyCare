@@ -39,3 +39,6 @@ PropertyCare/
     ├── src/auth/sfJwt.js           <-- Headless JWT Generation Engine
     ├── src/routes/webhook.js       <-- HMAC Signature Security Validator
     └── src/server.js               <-- Express Application Entry Framework
+
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/d11b18ab-87d1-47f1-a366-05e6dc4de2de" />
